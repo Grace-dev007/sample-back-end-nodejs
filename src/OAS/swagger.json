@@ -1,0 +1,59 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Prime One API",
+    "description": "This is a complete OpenAPI for the Prime One Project. Dsquared Media!",
+    "version": "0.1.9"
+  },
+  "servers": [
+    {
+      "url": "{PROTOCOL}://localhost:4000/api",
+      "description": "Localhost server",
+      "variables": {
+        "PROTOCOL": {
+          "enum": ["http", "https"],
+          "default": "http",
+          "description": "Protocol"
+        },
+        "HOST": {
+          "default": "localhost",
+          "description": "Host name for the localhost server"
+        },
+        "PORT": {
+          "enum": ["9000", "9001"],
+          "default": "9000",
+          "description": "Port number for localhost server"
+        }
+      }
+    },
+    {
+      "url": "{PROTOCOL}://{HOST}/api",
+      "description": "Other server",
+      "variables": {
+        "PROTOCOL": {
+          "enum": ["https", "http"],
+          "default": "https",
+          "description": "Protocol"
+        },
+        "HOST": {
+          "default": "live.com",
+          "enum": ["live.com", "qa-live.com"],
+          "description": "Host name for the development server"
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Check for prime one API Gateway health",
+        "tags": ["Common"],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          }
+        }
+      }
+    }
+  }
+}

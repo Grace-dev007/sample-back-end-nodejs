@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prescription Preview</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { width: 80%; margin: auto; }
+        .section { margin-bottom: 20px; }
+        .section h2 { color: #333; }
+        .section p { margin: 5px 0; }
+        img { max-width: 100%; height: auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Prescription Preview</h1>
+
+        <!-- <div class="section">
+            <h2>Patient Details</h2>
+            <% data.patient_details.forEach(function(detail) { %>
+                <p><strong>Name:</strong> <%= detail.name %></p>
+                <p><strong>Age:</strong> <%= detail.age %></p>
+                <p><strong>Gender:</strong> <%= detail.gender %></p>
+            <% }); %>
+        </div> -->
+
+        <div class="section">
+            <h2>Patient Details</h2>
+            <% if (data.patient_details && data.patient_details.length > 0) { %>
+                <% data.patient_details.forEach(function(detail) { %>
+                    <p><strong>Name:</strong></p>
+                    <p><strong>Age:</strong></p>
+                    <p><strong>Gender:</strong></p>
+                <% }); %>
+            <% } else { %>
+                <p class="no-data">No patient details available.</p>
+            <% } %>
+        </div>        
+
+        <!-- <div class="section">
+            <h2>Diagnosis</h2>
+            <p><strong>Differential Diagnosis:</strong></p>
+            <% data.diagnosis?.differential_diagnosis?.forEach(function(diagnosis) { %>
+                <p><%= diagnosis.name %></p>
+            <% }); %>
+            <p><strong>Provisional Diagnosis:</strong></p>
+            <% data.diagnosis?.provisional_diagnosis?.forEach(function(diagnosis) { %>
+                <p><%= diagnosis.name %></p>
+            <% }); %>
+            <p><strong>Diagnosis:</strong></p>
+            <% data.diagnosis?.diagnosis?.forEach(function(diagnosis) { %>
+                <p><%= diagnosis.name %></p>
+            <% }); %>
+        </div> -->
+
+        <div class="section">
+            <h2>Diagnosis</h2>
+            
+            <% if (data.diagnosis) { %>
+                <% if (data.diagnosis.differential_diagnosis && data.diagnosis.differential_diagnosis.length > 0) { %>
+                    <p><strong>Differential Diagnosis:</strong></p>
+                    <% data.diagnosis.differential_diagnosis.forEach(function(diagnosis) { %>
+                        <p><%= diagnosis.name || 'Data not available' %></p>
+                    <% }); %>
+                <% } else { %>
+                    <p><strong>Differential Diagnosis:</strong> Data not available</p>
+                <% } %>
+        
+                <% if (data.diagnosis.provisional_diagnosis && data.diagnosis.provisional_diagnosis.length > 0) { %>
+                    <p><strong>Provisional Diagnosis:</strong></p>
+                    <% data.diagnosis.provisional_diagnosis.forEach(function(diagnosis) { %>
+                        <p><%= diagnosis.name || 'Data not available' %></p>
+                    <% }); %>
+                <% } else { %>
+                    <p><strong>Provisional Diagnosis:</strong> Data not available</p>
+                <% } %>
+        
+                <% if (data.diagnosis.diagnosis && data.diagnosis.diagnosis.length > 0) { %>
+                    <p><strong>Diagnosis:</strong></p>
+                    <% data.diagnosis.diagnosis.forEach(function(diagnosis) { %>
+                        <p><%= diagnosis.name || 'Data not available' %></p>
+                    <% }); %>
+                <% } else { %>
+                    <p><strong>Diagnosis:</strong> Data not available</p>
+                <% } %>
+        
+            <% } else { %>
+                <p class="no-data">No diagnosis information available.</p>
+            <% } %>
+        </div>
+        
+
+        <!-- <div class="section">
+            <h2>Symptoms</h2>
+            <% data.symptoms?.symptoms?.forEach(function(symptom) { %>
+                <p><strong>Presenting Illness:</strong> <%= symptom?.presenting_illness %></p>
+                <p><strong>Duration:</strong> <%= symptom?.duration_of_numbers %> <%= symptom?.duration_type %></p>
+                <p><strong>Symptoms:</strong></p>
+                <% symptom.symptoms.forEach(function(symptomDetail) { %>
+                    <p><%= symptomDetail.name %></p>
+                <% }); %>
+            <% }); %>
+        </div> -->
+
+        <div class="section">
+            <h2>Symptoms</h2>
+            <% if (data.symptoms && data.symptoms.symptoms && data.symptoms.symptoms.length > 0) { %>
+                <% data.symptoms.symptoms.forEach(function(symptom) { %>
+                    <p><strong>Presenting Illness:</strong> <%= symptom.presenting_illness || 'N/A' %></p>
+                    <p><strong>Duration:</strong> <%= symptom.duration_of_numbers || 'N/A' %> <%= symptom.duration_type || 'N/A' %></p>
+                    <p><strong>Symptoms:</strong></p>
+                    <% if (symptom.symptoms && symptom.symptoms.length > 0) { %>
+                        <% symptom.symptoms.forEach(function(symptomDetail) { %>
+                            <p><%= symptomDetail.name || 'N/A' %></p>
+                        <% }); %>
+                    <% } else { %>
+                        <p>No symptoms detailed available.</p>
+                    <% } %>
+                <% }); %>
+            <% } else { %>
+                <p class="no-data">No symptoms information available.</p>
+            <% } %>
+        </div>        
+
+        <!-- <div class="section">
+            <h2>Vital Signs</h2>
+            <p><strong>Weight:</strong> <%= data.vital?.weight %></p>
+            <p><strong>Temperature:</strong> <%= data.vital?.temperature %></p>
+            <p><strong>Blood Pressure:</strong> <%= data.vital?.blood_pressure %></p>
+            <p><strong>Blood Oxygen:</strong> <%= data.vital?.blood_oxygen %></p>
+            <p><strong>Blood Glucose:</strong> <%= data.vital?.blood_glucose %></p>
+            <p><strong>Spirometer:</strong> <%= data?.vital?.spirometer %></p>
+            <p><strong>Stethoscope Image:</strong></p>
+            <img src="<%= data?.vital?.stethoscope %>" alt="Stethoscope">
+            <p><strong>Screenshot:</strong></p>
+            <img src="<%= data?.vital?.screenshot %>" alt="Screenshot">
+        </div> -->
+
+
+
+        <div class="section">
+            <h2>Vital Signs</h2>
+            <% if (data.vital) { %>
+                <% if (data.vital.weight) { %>
+                    <p><strong>Weight:</strong> <%= data.vital.weight %></p>
+                <% } else { %>
+                    <p><strong>Weight:</strong> Data not available</p>
+                <% } %>
+        
+                <% if (data.vital.temperature) { %>
+                    <p><strong>Temperature:</strong> <%= data.vital.temperature %></p>
+                <% } else { %>
+                    <p><strong>Temperature:</strong> Data not available</p>
+                <% } %>
+        
+                <% if (data.vital.blood_pressure) { %>
+                    <p><strong>Blood Pressure:</strong> <%= data.vital.blood_pressure %></p>
+                <% } else { %>
+                    <p><strong>Blood Pressure:</strong> Data not available</p>
+                <% } %>
+        
+                <% if (data.vital.blood_oxygen) { %>
+                    <p><strong>Blood Oxygen:</strong> <%= data.vital.blood_oxygen %></p>
+                <% } else { %>
+                    <p><strong>Blood Oxygen:</strong> Data not available</p>
+                <% } %>
+        
+                <% if (data.vital.blood_glucose) { %>
+                    <p><strong>Blood Glucose:</strong> <%= data.vital.blood_glucose %></p>
+                <% } else { %>
+                    <p><strong>Blood Glucose:</strong> Data not available</p>
+                <% } %>
+        
+                <% if (data.vital.spirometer) { %>
+                    <p><strong>Spirometer:</strong> <%= data.vital.spirometer %></p>
+                <% } else { %>
+                    <p><strong>Spirometer:</strong> Data not available</p>
+                <% } %>
+        
+                <% if (data.vital.stethoscope) { %>
+                    <p><strong>Stethoscope Image:</strong></p>
+                    <img src="<%= data.vital.stethoscope %>" alt="Stethoscope">
+                <% } else { %>
+                    <p><strong>Stethoscope Image:</strong> Image not available</p>
+                <% } %>
+        
+                <% if (data.vital.screenshot) { %>
+                    <p><strong>Screenshot:</strong></p>
+                    <img src="<%= data.vital.screenshot %>" alt="Screenshot">
+                <% } else { %>
+                    <p><strong>Screenshot:</strong> Image not available</p>
+                <% } %>
+            <% } else { %>
+                <p class="no-data">No vital signs information available.</p>
+            <% } %>
+        </div>
+
+
+        <div class="section">
+            <h2>Prescription</h2>
+        
+            <% if (data.prescription && data.prescription.length > 0) { %>
+                <% data.prescription.forEach(function(prescription) { %>
+        
+                    <% if (prescription.drugs && prescription.drugs.length > 0) { %>
+                        <h3>Drugs</h3>
+                        <% prescription.drugs.forEach(function(drug) { %>
+                            <p><strong>Drug Type:</strong> <%= drug.drug_type ? drug.drug_type : 'Drug Type' %></p>
+                            <p><strong>Medicine:</strong> <%= drug.medicine ? drug.medicine : 'Medicine' %></p>
+                            <p><strong>Route:</strong> <%= drug.route ? drug.route : 'Route' %></p>
+                            <p><strong>Measure:</strong> <%= drug.measure ? drug.measure : 'Measure' %></p>
+                            <p><strong>Dosage:</strong> <%= drug.dosage ? drug.dosage : 'Dosage' %></p>
+                            <p><strong>Frequency:</strong> <%= drug.frequency ? drug.frequency : 'Frequency' %></p>
+                            <p><strong>Duration:</strong> <%= drug.duration ? drug.duration : 'Duration' %></p>
+                            <p><strong>Timings:</strong> <%= drug.timings ? drug.timings : 'Timings' %></p>
+                            <p><strong>Instructions:</strong> <%= drug.instructions ? drug.instructions : 'Instructions' %></p>
+                        <% }); %>
+                    <% } else { %>
+                        <p><strong>Drugs:</strong> No drug information available.</p>
+                    <% } %>
+        
+                    <p><strong>Self-Care Instructions:</strong> <%= prescription.self_care ? prescription.self_care : 'Self-Care Instructions' %></p>
+        
+                    <p><strong>Follow-Up Date:</strong> 
+                        <% if (prescription.follow_up_date) { %>
+                            <%= new Date(prescription.follow_up_date).toDateString() %>
+                        <% } else { %>
+                            Follow-Up Date
+                        <% } %>
+                    </p>
+        
+                <% }); %>
+            <% } else { %>
+                <p class="no-data">No prescription information available.</p>
+            <% } %>
+        </div>
+        
+        
+        
+        
+</body>
+</html>
