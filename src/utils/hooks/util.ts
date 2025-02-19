@@ -27,8 +27,6 @@ export const authentication = (req: Request, res: Response, next: NextFunction) 
   jwt.verify(token, process.env.JWT_SECRET || '', (err, decoded: any) => {
     if (err) {
       return res.status(401).send({ message: 'Unauthorized: Invalid token' });
-    } else if (Number(req.headers['tenant-id']) !== Number(decoded.sub.tenant_id)) {
-      return res.status(401).send({ message: 'Invalid Tenant Id' });
     } else {
       req.headers['user_id'] = decoded.sub.id;
       req.headers['role'] = decoded.role; // Add role to the request headers
