@@ -38,8 +38,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv = __importStar(require("dotenv"));
 const express_1 = __importDefault(require("express"));
-const helmet_1 = __importDefault(require("helmet"));
-const body_parser_1 = __importDefault(require("body-parser"));
 const index_1 = __importDefault(require("./routes/index"));
 const cors_1 = __importDefault(require("cors"));
 const fs_1 = __importDefault(require("fs"));
@@ -56,15 +54,18 @@ dotenv.config({ path: path_1.default.join(__dirname, '../.env') });
 const port = parseInt(process.env.PORT || '4000', 10);
 const app = (0, express_1.default)();
 const corsUrl = process.env.CORS_URL;
-app.use((0, cors_1.default)({
-    allowedHeaders: '*',
-    methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-    origin: ['http://localhost:9000', corsUrl],
-}));
+app.use((0, cors_1.default)(
+//   {
+//   allowedHeaders: '*',
+//   methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
+//   origin: ['http://localhost:9000', corsUrl],
+// }
+));
 // Use Helmet!
-app.use((0, helmet_1.default)());
+// app.use(helmet());
+app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
-app.use(body_parser_1.default.json({ limit: '50mb' }));
+app.use(express_1.default.json({ limit: '50mb' }));
 app.use((req, res, next) => {
     next();
 });
@@ -104,7 +105,10 @@ app.get('/logs', (req, res) => {
 app.use('/api/v1', (0, index_1.default)());
 app.use('/api', (0, index_1.default)());
 app.use(errorHandler_1.handleError);
-app.listen(port, () => console.log(`Listing port is ${port} - pid : ${process.pid}`));
+// app.listen(port, () => console.log(`Listing port is ${port} - pid : ${process.pid}`));
+app.listen(4000, '0.0.0.0', () => {
+    console.log('Server is running on port 4000');
+});
 app.get('/datecheck', (req, res) => {
     const time = '20:39:00';
     const kolkataTime = moment_timezone_1.default.tz(time, 'HH:mm:ss', 'Asia/Kolkata');
