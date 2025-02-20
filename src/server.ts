@@ -38,7 +38,7 @@ app.use(
 
 // Use Helmet!
 app.use(helmet());
-
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json({ limit: '50mb' }));
 
