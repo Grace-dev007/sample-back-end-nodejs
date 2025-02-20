@@ -93,7 +93,11 @@ app.use('/api', appRoutes());
 
 app.use(handleError);
 
-app.listen(port, () => console.log(`Listing port is ${port} - pid : ${process.pid}`));
+// app.listen(port, () => console.log(`Listing port is ${port} - pid : ${process.pid}`));
+app.listen(4000, '0.0.0.0', () => {
+  console.log('Server is running on port 4000');
+});
+
 app.get('/datecheck', (req, res) => {
   const time = '20:39:00';
   const kolkataTime = moment.tz(time, 'HH:mm:ss', 'Asia/Kolkata');
