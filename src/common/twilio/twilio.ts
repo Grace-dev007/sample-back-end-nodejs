@@ -28,7 +28,7 @@ const verifySms = async (number: any, code: any) => {
   const client = Twilio(accountSid, authToken);
   const serviceSid: any = process.env.TWILIO_SERVICE_ID;
   try {
-    const verification_check=  client.verify.v2
+    const verification_check = client.verify.v2
       .services(serviceSid)
       .verificationChecks.create({ to: number, code })
         return verification_check;
