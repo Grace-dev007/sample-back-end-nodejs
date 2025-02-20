@@ -29,18 +29,21 @@ const app = express();
 const corsUrl: any = process.env.CORS_URL;
 
 app.use(
-  cors({
-    allowedHeaders: '*',
-    methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-    origin: ['http://localhost:9000', corsUrl],
-  }),
+  cors(
+  //   {
+  //   allowedHeaders: '*',
+  //   methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
+  //   origin: ['http://localhost:9000', corsUrl],
+  // }
+),
 );
 
 // Use Helmet!
-app.use(helmet());
+// app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(bodyParser.json({ limit: '50mb' }));
+app.use(express.json({ limit: '50mb' }));
+
 
 app.use((req, res, next) => {
   next();
