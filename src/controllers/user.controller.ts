@@ -6,7 +6,9 @@ import jwt from 'jsonwebtoken';
 
 export const register = async (req: Request, res: Response) => {
     try {
+        console.log("entry register------------->");
         const userData = req.body;
+        console.log('userData: ', userData);
 
         const user = await createUser(userData)
         ApiResponse(res, {
