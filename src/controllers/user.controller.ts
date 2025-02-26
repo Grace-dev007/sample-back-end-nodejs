@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { createUser, getLoginUser } from "../service/user.service";
 import { ApiResponse, generateToken } from "../utils/hooks/util";
+import { findUserById } from "../service/user.service";
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
@@ -73,5 +74,6 @@ export const login = async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 }
+
 
 

@@ -1,6 +1,7 @@
 import { Users, IUser } from '../models/Users.model';
 import mongoose from 'mongoose';
 import axios from 'axios';
+import { Request, Response } from 'express';
 
 export const createUser = async (userData: IUser) => {
     const newUser = new Users(userData);
@@ -36,4 +37,5 @@ export const findUserById = async (userId: string) => {
 export const findUserById_Cols = async (userId: string) => {
     return Users.findById(userId);
 };
+
 

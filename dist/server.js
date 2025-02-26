@@ -54,13 +54,11 @@ dotenv.config({ path: path_1.default.join(__dirname, '../.env') });
 const port = parseInt(process.env.PORT || '4000', 10);
 const app = (0, express_1.default)();
 const corsUrl = process.env.CORS_URL;
-app.use((0, cors_1.default)(
-//   {
-//   allowedHeaders: '*',
-//   methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-//   origin: ['http://localhost:9000', corsUrl],
-// }
-));
+app.use((0, cors_1.default)({
+    allowedHeaders: '*',
+    methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
+    origin: ['http://localhost:9000', corsUrl],
+}));
 // Use Helmet!
 // app.use(helmet());
 app.use(express_1.default.json());
