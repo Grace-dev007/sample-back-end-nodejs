@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { createUser, getLoginUser } from "../service/user.service";
+import { createUser, getLoginUser, softDeleteUser, updateUser } from "../service/user.service";
 import { ApiResponse, generateToken } from "../utils/hooks/util";
 import { findUserById } from "../service/user.service";
 import bcrypt from 'bcryptjs';
@@ -75,5 +75,77 @@ export const login = async (req: Request, res: Response) => {
     }
 }
 
+export const getUserById = async (req: Request, res: Response) => {
+    try {
+        const  userId  = req.params.id; // Get userId from request parameters
+        const user = await findUserById(userId); // Call service function
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+        ApiResponse(res, {
+            status: 201,
+            message: 'Registered successfully',
+            validation: null,
+            totalCount: null,
+            data: user,
+        });
+    } catch (error: any) {
+        ApiResponse(res, {
+            status: 500,
+            message: error.message,
+            validation: null,
+            totalCount: null,
+            data: null,
+        });}
+};
+
+export const upDate = async (req: Request, res: Response) => {
+    console.log('upDate: ', upDate);
+    try {
+        console.log("entry register------------->");
+        const userId = req.params.email; // Get user ID from params
+        // const { email, password, ...updateFields } = req.body;
+        console.log('userData: ', userId);
+
+        const user = await updateUser(userId)
+        ApiResponse(res, {
+            status: 200,
+            message: 'Updated successfully',
+            validation: null,
+            totalCount: null,
+            data: user,
+        });
+    } catch (error: any) {
+        ApiResponse(res, {
+            status: 500,
+            message: error.message,
+            validation: null,
+            totalCount: null,
+            data: null,
+        });
+    }
+}
+
+export const deleteUserById = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const user = await softDeleteUser(id);
+        ApiResponse(res, {
+            status: 200,
+            message: 'Deleted successfully',
+            validation: null,
+            totalCount: null,
+            data: user,
+        });
+    } catch (error: any) {
+        ApiResponse(res, {
+            status: 500,
+            message: error.message,
+            validation: null,
+            totalCount: null,
+            data: null,
+        });
+    }
+}
 
 
