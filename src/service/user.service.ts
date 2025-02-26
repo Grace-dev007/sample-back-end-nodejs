@@ -54,7 +54,7 @@ export const updateUser = async (userData: any) => {
             { email: userData.email }, // Search for the user by email
             userData, // Data to update or insert
             { new: true, upsert: true }, // Options: return the new document, upsert if it doesn't exist
-        );
+        )
     } 
 
 
