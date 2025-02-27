@@ -5,9 +5,8 @@ import { Request, Response } from 'express';
 import { log } from 'node:console';
 
 export const createUser = async (userData: IUser) => {
-    const newUser = new Users(userData);
-    const savedUser = await newUser.save();
-    return savedUser;
+    const newUser = await Users.create(userData);
+    return newUser;
 };
 
 export const createOrUpdateUser = async (userData: any) => {
@@ -48,13 +47,10 @@ export const softDeleteUser = async (userId: string) => {
     return await Users.findByIdAndUpdate( userId, { deletedAt: new Date() } );// Soft delete by setting timestamp
 };
 
-export const updateUser = async (userData: any) => {
-    
-        return await Users.findOneAndUpdate(
-            { email: userData.email }, // Search for the user by email
-            userData, // Data to update or insert
-            { new: true, upsert: true }, // Options: return the new document, upsert if it doesn't exist
-        )
-    } 
-
-
+export const updateUser = async (userId: string, userData: IUser) => {
+    // Perform the update
+    return await Users.findOneAndUpdate(
+        { _id: userId }, // Search for the user by userId
+        { $set: userData }, // Update only provided fields
+        { new: true, runValidators: true } // Return the updated document, enforce validation
+    )}

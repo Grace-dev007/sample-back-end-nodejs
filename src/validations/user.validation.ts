@@ -1,5 +1,6 @@
 import { body } from "express-validator";
 import { Users } from "../models/Users.model";
+import { Request } from "express";
 
 export const createValidation = [
 
@@ -53,14 +54,13 @@ export const updateValidation = [
     .isLength({ max: 30 }).withMessage('Name atleast in 30 characters'),
 
     body('email')
-    .notEmpty()
-    .withMessage('Email is required')
-    .isEmail().withMessage('Invalid email (^@.$) format')
-    .custom(async (value) => {
-        const existingUser = await Users.findOne( { email: value } );
-        if (existingUser) {
-            throw new Error('Email is already registered');
-        }
+    .custom(async (value, { req }) => {
+      const request = req as Request;
+      const existingUser = await Users.findOne({ email: value });
+  
+      if (existingUser && existingUser._id.toString() !== request.params.id) {
+        throw new Error('Email is already registered');
+      }
     }),
 
     body('company_name')
@@ -72,11 +72,11 @@ export const updateValidation = [
     .withMessage('Phone Number is required'),
 
     body('password')
-    .notEmpty()
-    .withMessage('Password is must'),
+    .optional(),
+   
 
     body('confirm_password')
-    .notEmpty()
-    .withMessage('Confirm Password is must and match the password')
-
+    .optional()
+   
 ]
+

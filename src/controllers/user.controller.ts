@@ -100,14 +100,15 @@ export const getUserById = async (req: Request, res: Response) => {
 };
 
 export const upDate = async (req: Request, res: Response) => {
-    console.log('upDate: ', upDate);
     try {
-        console.log("entry register------------->");
-        const userId = req.params.email; // Get user ID from params
-        // const { email, password, ...updateFields } = req.body;
-        console.log('userData: ', userId);
-
-        const user = await updateUser(userId)
+        const userId = req.params.id;
+        const { password, ...updateFields} = req.body; 
+       
+          // Hash password if it's being updated
+    if (password) {
+        updateFields.password = await bcrypt.hash(password, 10);
+      }
+        const user = await updateUser(userId, updateFields)
         ApiResponse(res, {
             status: 200,
             message: 'Updated successfully',
