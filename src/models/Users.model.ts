@@ -8,7 +8,7 @@ export interface IUser {
     contact_number: number;
     company_name: string;
     password: string;
-    confirm_password: string;
+    // confirm_password: string;
     deletedAt: Date | null;
 }
 
@@ -19,7 +19,7 @@ const userSchema = new Schema<IUser>({
     contact_number: { type: Number },
     company_name: { type: String },
     password: { type: String },
-    confirm_password: { type: String },
+    // confirm_password: { type: String },
     deletedAt: { type: Date, default: null }
 });
 
@@ -35,10 +35,12 @@ userSchema.pre('save', async function (next) {
     }
 
     // Don't store confirm_password in the DB
-    user.confirm_password = '';
+    // user.confirm_password = '';
 
     next();
 });
+
+
 
 // Method to compare entered password with the hashed password
 userSchema.methods.comparePassword = async function (password: string) {

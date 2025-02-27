@@ -49,7 +49,7 @@ export const authorizeRole = (allowedRoles: string[]) => {
 };
 
 export const ApiResponse = async (
-  res: any,
+  res: Response,
   response: { status: number; message: string; validation?: any; totalCount?: any; data?: any },
 ) => {
   // console.log('response: ', response);

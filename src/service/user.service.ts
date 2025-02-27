@@ -1,11 +1,12 @@
 import { Users, IUser } from '../models/Users.model';
 import mongoose from 'mongoose';
 import axios from 'axios';
+import { Request, Response } from 'express';
+import { log } from 'node:console';
 
 export const createUser = async (userData: IUser) => {
-    const newUser = new Users(userData);
-    const savedUser = await newUser.save();
-    return savedUser;
+    const newUser = await Users.create(userData);
+    return newUser;
 };
 
 export const createOrUpdateUser = async (userData: any) => {
@@ -37,3 +38,19 @@ export const findUserById_Cols = async (userId: string) => {
     return Users.findById(userId);
 };
 
+export const findUsers = async (req: Request, res: Response) => {
+    const users = await Users.find();
+    res.status(200).json({ success: true, data: users });
+};
+
+export const softDeleteUser = async (userId: string) => {
+    return await Users.findByIdAndUpdate( userId, { deletedAt: new Date() } );// Soft delete by setting timestamp
+};
+
+export const updateUser = async (userId: string, userData: IUser) => {
+    // Perform the update
+    return await Users.findOneAndUpdate(
+        { _id: userId }, // Search for the user by userId
+        { $set: userData }, // Update only provided fields
+        { new: true, runValidators: true } // Return the updated document, enforce validation
+    )}
