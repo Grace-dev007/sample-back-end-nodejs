@@ -5,6 +5,7 @@ import { findUserById } from "../service/user.service";
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
+
 export const register = async (req: Request, res: Response) => {
     try {
         console.log("entry register------------->");
