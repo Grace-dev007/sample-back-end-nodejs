@@ -13,7 +13,7 @@ const userSchema = new mongoose_1.Schema({
     contact_number: { type: Number },
     company_name: { type: String },
     password: { type: String },
-    confirm_password: { type: String },
+    // confirm_password: { type: String },
     deletedAt: { type: Date, default: null }
 });
 // Pre-save hook to hash the password before saving to DB
@@ -25,7 +25,7 @@ userSchema.pre('save', async function (next) {
         user.password = await bcryptjs_1.default.hash(user.password, 10);
     }
     // Don't store confirm_password in the DB
-    user.confirm_password = '';
+    // user.confirm_password = '';
     next();
 });
 // Method to compare entered password with the hashed password

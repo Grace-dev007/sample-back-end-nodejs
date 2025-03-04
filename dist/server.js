@@ -55,9 +55,9 @@ const port = parseInt(process.env.PORT || '4000', 10);
 const app = (0, express_1.default)();
 const corsUrl = process.env.CORS_URL;
 app.use((0, cors_1.default)({
-    allowedHeaders: '*',
+    // allowedHeaders: '*',
     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-    origin: ['http://localhost:9000', corsUrl],
+    origin: ['http://localhost:3000', corsUrl]
 }));
 // Use Helmet!
 // app.use(helmet());
@@ -103,10 +103,7 @@ app.get('/logs', (req, res) => {
 app.use('/api/v1', (0, index_1.default)());
 app.use('/api', (0, index_1.default)());
 app.use(errorHandler_1.handleError);
-// app.listen(port, () => console.log(`Listing port is ${port} - pid : ${process.pid}`));
-app.listen(4000, '0.0.0.0', () => {
-    console.log('Server is running on port 4000');
-});
+app.listen(port, () => console.log(`Listing port is ${port} - pid : ${process.pid}`));
 app.get('/datecheck', (req, res) => {
     const time = '20:39:00';
     const kolkataTime = moment_timezone_1.default.tz(time, 'HH:mm:ss', 'Asia/Kolkata');
