@@ -30,11 +30,11 @@ const corsUrl: any = process.env.CORS_URL;
 
 app.use(
   cors(
-  //   {
-  //   allowedHeaders: '*',
-  //   methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-  //   origin: ['http://localhost:3000', corsUrl]
-  // }
+    {
+    // allowedHeaders: '*',
+    methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
+    origin: ['http://localhost:3000', corsUrl]
+  }
 ),
 );
 
