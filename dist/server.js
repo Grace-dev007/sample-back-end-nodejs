@@ -55,7 +55,7 @@ const port = parseInt(process.env.PORT || '4000', 10);
 const app = (0, express_1.default)();
 const corsUrl = process.env.CORS_URL;
 app.use((0, cors_1.default)({
-    // allowedHeaders: '*',
+    allowedHeaders: '*',
     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
     origin: ['http://localhost:3000', corsUrl]
 }));
