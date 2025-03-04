@@ -101,7 +101,7 @@ export const getUserById = async (req: Request, res: Response) => {
 };
 
 export const upDate = async (req: Request, res: Response) => {
-    try {
+        try {
         const userId = req.params.id;
         const { password, ...updateFields} = req.body; 
        
