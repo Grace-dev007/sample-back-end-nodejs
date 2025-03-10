@@ -48,19 +48,20 @@ const login = async (req, res) => {
             return res.status(400).json({ message: 'Invalid password' });
         }
         const hash = {
+            id: user._id,
             role: user.role,
             name: user.name,
             email: user.email
         };
         // Generate JWT token
-        const token = (0, util_1.generateToken)(hash);
+        const token = await (0, util_1.generateToken)(hash);
         // Send token as response
         (0, util_1.ApiResponse)(res, {
             status: 201,
             message: 'Login successful',
             validation: null,
             totalCount: null,
-            data: { user, token: token }
+            data: { user, token }
         });
     }
     catch (error) {

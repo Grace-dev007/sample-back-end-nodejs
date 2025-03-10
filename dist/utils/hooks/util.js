@@ -14,6 +14,7 @@ const generateToken = async (user) => {
         iat: (0, moment_1.default)().unix(),
         exp: (0, moment_1.default)().add(process.env.EXPIRY_TIME, 'hours').unix(),
     };
+    console.log('payload: ', payload);
     return jsonwebtoken_1.default.sign(payload, process.env.JWT_SECRET || '');
 };
 exports.generateToken = generateToken;

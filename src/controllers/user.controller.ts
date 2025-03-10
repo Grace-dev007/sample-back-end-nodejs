@@ -40,6 +40,7 @@ export const login = async (req: Request, res: Response) => {
     }
 
     try {
+    
         const user = await getLoginUser(email);
         
         if (!user) {
@@ -53,13 +54,14 @@ export const login = async (req: Request, res: Response) => {
         }
 
         const hash = {
+            id: user._id,
             role: user.role,
             name: user.name,
             email: user.email
         }
 
         // Generate JWT token
-        const token = generateToken(hash);
+        const token = await generateToken(hash);
 
         // Send token as response
         ApiResponse(res, {
@@ -67,7 +69,7 @@ export const login = async (req: Request, res: Response) => {
             message: 'Login successful',
             validation: null,
             totalCount: null,
-            data: {user, token: token}
+            data: {user, token}
         });
         
     } catch (error) {

@@ -9,14 +9,16 @@ export const generateToken = async (user: any) => {
     role: user.role, // Add role to the payload
     iat: moment().unix(),
     exp: moment().add(process.env.EXPIRY_TIME, 'hours').unix(),
+    
   };
+  console.log('payload: ', payload);
   return jwt.sign(payload, process.env.JWT_SECRET || '');
 };
 
 // Middleware to authenticate token
 export const authentication = (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
-
+  
   if (!authHeader) return res.status(401).send({ message: 'Unauthorized: Invalid token' });
   if (!authHeader.startsWith('Bearer'))
     return res.status(401).send({ message: 'Unauthorized: Invalid authorization header' });
@@ -35,6 +37,8 @@ export const authentication = (req: Request, res: Response, next: NextFunction) 
     }
   });
 };
+
+
 
 // Middleware to authorize based on roles
 export const authorizeRole = (allowedRoles: string[]) => {

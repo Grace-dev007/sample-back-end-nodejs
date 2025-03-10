@@ -19,13 +19,13 @@ export interface IUser {
 
 
 const userSchema = new Schema<IUser>({
-    role: { type: String, enum: Object.values(UserRole), required: true },
-    name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    contact_number: { type: Number, required: true },
+    role: { type: String, enum: Object.values(UserRole),  },
+    name: { type: String  },
+    email: { type: String  },
+    contact_number: { type: Number  },
     company_name: { type: String },
-    password: { type: String, required: true },
-    confirm_password: { type: String, required: true },
+    password: { type: String  },
+    confirm_password: { type: String  },
     deletedAt: { type: Date, default: null }
 });
 
@@ -45,8 +45,6 @@ userSchema.pre('save', async function (next) {
 
     next();
 });
-
-
 
 
 userSchema.methods.comparePassword = async function (password: string) {
